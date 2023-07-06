@@ -3,4 +3,15 @@ body {
     Arial, sans-serif;
   margin: auto;
   padding: 2rem;
+  background-color: aliceblue;
+}
+
+.weather-icon {
+  max-width: 75%;
+  align-self: center;
+}
+
+.temp-text {
+  font-weight: bold;
+  font-size: xx-large;
 }
