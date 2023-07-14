@@ -7,11 +7,6 @@ body {
 }
 
 .weather-icon {
-  max-width: 75%;
+  max-width: 50%;
   align-self: center;
-}
-
-.temp-text {
-  font-weight: bold;
-  font-size: 100%;
 }

@@ -37,11 +37,10 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
           `<div class="card">
             <div class="container-fluid">
               <img src="https:${weather_data.current.condition.icon}" class="f-l weather-icon card-img-top" alt="${location}">
-              <p class="temp-text">${weather_data.current.temp_c}°C</p>
             </div>
             <div class="card-body">
+              <h2 class="card-title">${weather_data.current.temp_c}°C</h2>
               <h4 class="card-title">${location}</h4>
-              <hr/>
               <p class="card-text">${weather_data.location.country}</p>
               <ul class="list-group list-group-flush" id="days-${count}">
               </ul>
@@ -51,7 +50,21 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
 
         $(`#locations`).append(card);
 
-        $(`#days-${count}`).append();
+        const DAYS = 3;
+        for (i = 0; i < DAYS; i++) {
+          let current = weather_data.forecast.forecastday[i];
+          let day =
+            `<li class="list-group-item">
+              <div class="media">
+                <img class="mr-3" src="https:${current.day.condition.icon}" alt=":(">
+                <div class="media-body">
+                  <h5 class="mt-0">${current.day.mintemp_c}°C - ${current.day.maxtemp_c}°C</h5>
+                  ${new Date(current.date).toLocaleString('en-us', { weekday: 'long' })}
+                </div>
+              </div>
+            </li>`;
+          $(`#days-${count}`).append(day);
+        }
 
         count++;
       });
