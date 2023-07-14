@@ -10,7 +10,6 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
   }
   var settings = JSON.parse(data);
 
-  let row = 0;
   let count = 0;
 
   settings.locations.forEach(location => {
@@ -25,29 +24,20 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
       res.on('end', () => {
         let weather_data = JSON.parse(Buffer.concat(tmp).toString());
 
-        if (count % 4 == 0) {
-          row++;
-          $("#locations").append(`<div class="row align-items-center mb-3" id="locations-row-${row}"></div>`);
-        }
-
-
         let card = weather_data.error ?
-          `<div class="col-sm-3">
-            <div class="card">
+          `<div class="card">
             <img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-51-512.png" class="weather-icon card-img-top" alt=":(">
               <div class="card-body">
                 <h5 class="card-title">${location}</h5>
                 <hr/>
                 <p class="card-text">This location is not currently supported.</p>
               </div>
-            </div>
           </div>`
           :
-          `<div class="col-sm-3">
-            <div class="card">
-            <div class="row align-items-center">
-              <div class="col-6 align-items-center"><img src="https:${weather_data.current.condition.icon}" class="weather-icon card-img-top" alt="${location}"></div>
-              <div class="col-6 align-items-center"><p class="temp-text">${weather_data.current.temp_c}°C</p></div>
+          `<div class="card">
+            <div class="container-fluid">
+              <img src="https:${weather_data.current.condition.icon}" class="f-l weather-icon card-img-top" alt="${location}">
+              <p class="temp-text">${weather_data.current.temp_c}°C</p>
             </div>
             <div class="card-body">
               <h4 class="card-title">${location}</h4>
@@ -57,10 +47,9 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
               </ul>
               <p class="card-text"><small class="text-muted">Updated ${weather_data.current.last_updated}</small></p>
             </div>
-            </div>
           </div>`;
 
-        $(`#locations-row-${row}`).append(card);
+        $(`#locations`).append(card);
 
         $(`#days-${count}`).append();
 
