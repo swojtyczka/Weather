@@ -5,10 +5,11 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-app.on("ready", () => {
+function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 700,
+    icon: path.join(__dirname, "../icon.ico"),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -16,8 +17,7 @@ app.on("ready", () => {
     },
   });
   mainWindow.loadURL(`file://${__dirname}/../app/index.html`);
-});
-
+}
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -25,8 +25,10 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+app.whenReady().then(() => {
+  createWindow()
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+})

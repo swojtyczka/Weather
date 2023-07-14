@@ -10,3 +10,14 @@ body {
   max-width: 50%;
   align-self: center;
 }
+
+#add-location {
+  max-width: 64px;
+  max-height: 64px;
+  margin: auto;
+  display: block;
+}
+
+.weather-card {
+  margin-bottom: 10px;
+}

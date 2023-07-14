@@ -25,30 +25,34 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
         let weather_data = JSON.parse(Buffer.concat(tmp).toString());
 
         let card = weather_data.error ?
-          `<div class="card">
-            <img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-51-512.png" class="weather-icon card-img-top" alt=":(">
-              <div class="card-body">
-                <h5 class="card-title">${location}</h5>
-                <hr/>
-                <p class="card-text">This location is not currently supported.</p>
-              </div>
+          `<div class="col-3">
+            <div class="card weather-card">
+              <img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-51-512.png" class="weather-icon card-img-top" alt=":(">
+                <div class="card-body">
+                  <h5 class="card-title">${location}</h5>
+                  <hr/>
+                  <p class="card-text">This location is not currently supported.</p>
+                </div>
+            </div>
           </div>`
           :
-          `<div class="card">
-            <div class="container-fluid">
-              <img src="https:${weather_data.current.condition.icon}" class="f-l weather-icon card-img-top" alt="${location}">
-            </div>
-            <div class="card-body">
-              <h2 class="card-title">${weather_data.current.temp_c}°C</h2>
-              <h4 class="card-title">${location}</h4>
-              <p class="card-text">${weather_data.location.country}</p>
-              <ul class="list-group list-group-flush" id="days-${count}">
-              </ul>
-              <p class="card-text"><small class="text-muted">Updated ${weather_data.current.last_updated}</small></p>
+          `<div class="col-3">
+            <div class="card weather-card">
+              <div class="container-fluid">
+                <img src="https:${weather_data.current.condition.icon}" class="f-l weather-icon card-img-top" alt="${location}">
+              </div>
+              <div class="card-body">
+                <h2 class="card-title">${weather_data.current.temp_c}°C</h2>
+                <h4 class="card-title">${location}</h4>
+                <p class="card-text">${weather_data.location.country}</p>
+                <ul class="list-group list-group-flush" id="days-${count}">
+                </ul>
+                <p class="card-text"><small class="text-muted">Updated ${weather_data.current.last_updated}</small></p>
+              </div>
             </div>
           </div>`;
 
-        $(`#locations`).append(card);
+        $(`#locations`).prepend(card);
 
         const DAYS = 3;
         for (i = 0; i < DAYS; i++) {
