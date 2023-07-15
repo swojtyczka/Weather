@@ -2,13 +2,14 @@ const fs = require('fs');
 const https = require('https');
 window.$ = window.jQuery = require('jquery');
 
+var settings;
 
 fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
   if (err) {
     alert("An error ocurred reading the file :" + err.message);
     return;
   }
-  var settings = JSON.parse(data);
+  settings = JSON.parse(data);
 
   let count = 0;
 
@@ -26,18 +27,20 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
 
         let card = weather_data.error ?
           `<div class="col-3">
-            <div class="card weather-card">
+            <div class="card text-center weather-card">
               <img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-51-512.png" class="weather-icon card-img-top" alt=":(">
                 <div class="card-body">
                   <h5 class="card-title">${location}</h5>
                   <hr/>
                   <p class="card-text">This location is not currently supported.</p>
+
+                  <a onclick="deleteLocation('${location}');" class="btn btn-danger">&times;</a>
                 </div>
             </div>
           </div>`
           :
           `<div class="col-3">
-            <div class="card weather-card">
+            <div class="card text-center weather-card">
               <div class="container-fluid">
                 <img src="https:${weather_data.current.condition.icon}" class="f-l weather-icon card-img-top" alt="${location}">
               </div>
@@ -47,6 +50,9 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
                 <p class="card-text">${weather_data.location.country}</p>
                 <ul class="list-group list-group-flush" id="days-${count}">
                 </ul>
+
+                <a onclick="deleteLocation('${location}');" class="btn btn-danger">&times;</a>
+
                 <p class="card-text"><small class="text-muted">Updated ${weather_data.current.last_updated}</small></p>
               </div>
             </div>
@@ -76,4 +82,3 @@ fs.readFile("./data/settings.json", 'utf-8', (err, data) => {
     })
   });
 });
-
