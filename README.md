@@ -1,7 +1,7 @@
-# Weather app
+# Weather
 
-> Yes, I was bored.
+I created this simple app when I was bored during summer break.
 
-Simple weather app created using electron.
+This project uses Electron and [weatherapi](https://www.weatherapi.com/).
 
-I'm using the free [weatherapi](https://www.weatherapi.com/) for this project.
+All it stores is an array of places in `/data/settings.json`. There is no verification so some names may simply not work beacuse the API doesn't recognize them.
